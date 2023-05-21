@@ -8,8 +8,8 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
 
 const { serviceDataSource } = require('./api/models/appDataSource');
-
 const router = require('./api/routes/index');
+
 const { globalErrorHandler } = require('./api/utils/globalErrorHandler');
 
 app.use(morgan('combined'));
