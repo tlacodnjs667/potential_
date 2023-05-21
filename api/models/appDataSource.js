@@ -1,4 +1,5 @@
 const { DataSource } = require('typeorm');
+require('dotenv').config({ path: '../../.env' });
 
 const serviceDataSource = new DataSource({
 	type: process.env.TYPEORM_CONNECTION,
@@ -7,6 +8,7 @@ const serviceDataSource = new DataSource({
 	username: process.env.TYPEORM_USERNAME,
 	database: process.env.TYPEORM_DATABASE,
 	password: process.env.TYPEORM_PASSWORD,
+	migrations: ['../../db/migrations'],
 });
 
 serviceDataSource
