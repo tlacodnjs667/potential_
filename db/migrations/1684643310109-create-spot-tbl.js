@@ -13,9 +13,10 @@ module.exports = class CreateSpotTbl1684643310109 {
                 content VARCHAR(300) NOT NULL,
                 photo VARCHAR(300) NOT NULL,
                 created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+                updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
                 PRIMARY KEY (id),
-                FOREIGN KEY (user_id) REFERENCES users (id),
-                FOREIGN KEY (spot_keyword_id) REFERENCES spot_keyword (id)
+                FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+                FOREIGN KEY (spot_keyword_id) REFERENCES spot_keyword (id) ON DELETE CASCADE
             );
         `);
 	}

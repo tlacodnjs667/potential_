@@ -8,10 +8,11 @@ module.exports = class CreateCommentTbl1684644921314 {
                 user_id INT NOT NULL,
                 spot_id INT NOT NULL,
                 comment VARCHAR(300) NOT NULL,
-                created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
                 PRIMARY KEY (id),
-                FOREIGN KEY (user_id) REFERECES users (id),
-                FOREIGN KEY (spot_id) REFERECES spots (id)
+                FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+                FOREIGN KEY (spot_id) REFERENCES spots (id) ON DELETE CASCADE
             );
         `);
 	}
