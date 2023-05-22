@@ -1,4 +1,5 @@
 const { DataSource } = require('typeorm');
+
 require('dotenv').config({ path: '../../.env' });
 
 const serviceDataSource = new DataSource({
