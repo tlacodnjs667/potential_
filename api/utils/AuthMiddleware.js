@@ -1,24 +1,20 @@
-const jwt = require('jsonwebtoken');
+const { JWTUtil } = require('./AuthUtil');
 
-class JWTMiddleWare {
-	static __publish_JWT(user) {
-		return jwt.sign(user, process.env.JWT_SECRETKEY, { expiresIn: '5h' });
+const AuthMiddleware = async (req, res, next) => {
+	const { access_token } = req.headers;
+
+	if (!access_token) {
+		const err = new Error('CANNOT_FIND_TOKEN');
+		err.statusCode = 404;
+		throw err;
 	}
 
-	static __validate_JWT(token) {
-		return jwt.verify(token, process.env.JWT_SECRETKEY);
-	}
-}
+	const { user } = await JWTUtil.__validate_JWT(access_token);
 
-module.exports = JWTMiddleWare;
+	req.user = user.id;
 
-/*
-    로그아웃 기능 개발 시,
-    1. Token 발행과 동시에 DB 내 Token DATA 저장하는 과정 추가. 
-    -> 세션에 대한 공부 이후 세션 이용하는 방향으로 
-    
-    2. Token 검증 시,
-    Token verify 후, DB 내에 해당 유저의 Token 값과 동일한지 더블 체크
+	next();
+};
 
-    3. 로그 아웃 기능에서 DB 내 유저의 Token 삭제
-*/
+module.exports = { AuthMiddleware };
+// 만약 DB 에 저장된 토큰에
