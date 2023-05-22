@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
 
-class EncryptionMiddleware {
+class EncryptionUtil {
 	static __encrypt_psword(psword) {
-		return bcrypt.hash(psword, process.env.BCRYPT_SALT_ROUND);
+		return bcrypt.hash(psword, Number(process.env.BCRYPT_SALT_ROUND));
 	}
 
 	static __check_password(pw, encrypted_pw) {
@@ -11,4 +11,4 @@ class EncryptionMiddleware {
 	}
 }
 
-module.exports = EncryptionMiddleware;
+module.exports = { EncryptionUtil };
