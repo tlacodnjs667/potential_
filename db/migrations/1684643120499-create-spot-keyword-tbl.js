@@ -1,5 +1,3 @@
-const { MigrationInterface, QueryRunner } = require('typeorm');
-
 module.exports = class CreateSpotKeywordTbl1684643120499 {
 	async up(queryRunner) {
 		await queryRunner.query(`

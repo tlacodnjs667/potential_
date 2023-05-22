@@ -1,5 +1,3 @@
-const { MigrationInterface, QueryRunner } = require('typeorm');
-
 module.exports = class CreateCommentTbl1684644921314 {
 	async up(queryRunner) {
 		await queryRunner.query(`
