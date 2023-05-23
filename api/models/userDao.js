@@ -5,7 +5,7 @@ const getUserInfoInDB = (email) => {
         SELECT
             id,
             nickname,
-            psword
+            password
         FROM users
         WHERE email = '${email}'
     `);
@@ -16,7 +16,7 @@ const createUser = (email, nickname, password) => {
         INSERT INTO users (
             email, 
             nickname, 
-            psword
+            password
         ) VALUES (
             '${email}',
             '${nickname}',
