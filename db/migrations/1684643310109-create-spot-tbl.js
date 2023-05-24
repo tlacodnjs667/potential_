@@ -6,7 +6,7 @@ module.exports = class CreateSpotTbl1684643310109 {
                 user_id INT NOT NULL DEFAULT 1,
                 spot_keyword_id INT NOT NULL,
                 address VARCHAR (100) NULL,
-                spotLongtitude DECIMAL(18,10) NOT NULL,
+                spotLongitude DECIMAL(18,10) NOT NULL,
                 spotLatitude DECIMAL(18,10) NOT NULL,
                 content VARCHAR(300) NOT NULL,
                 photo VARCHAR(300) NOT NULL,

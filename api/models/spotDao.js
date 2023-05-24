@@ -7,11 +7,19 @@ const getSpot = async (longtitude, latitude) => {
 
 	return serviceDataSource.query(`
         SELECT  
-            id, 
-            address, 
-            ST_Distance_Sphere(@location, POINT(spotLongtitude, spotLatitude)) AS distance 
+            spots.id, 
+            address,
+            ST_Distance_Sphere(@location, POINT(spotLongitude, spotLatitude)) AS distance,
+            spot_keyword_id AS spot_keyword,
+            spotLongitude,
+            spotLatitude,
+            content,
+            photo,
+            spots.created_at,
+            users.nickname
         FROM spots 
-        WHERE ST_Distance_Sphere(@location, POINT(spotLongtitude, spotLatitude)) <= 1200
+        LEFT JOIN users ON spots.user_id = users.id
+        WHERE ST_Distance_Sphere(@location, POINT(spotLongitude, spotLatitude)) <= 100000000000
         ORDER BY distance;
     `);
 };
