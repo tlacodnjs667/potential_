@@ -14,4 +14,23 @@ const createComment = (userId, spotId, comment) => {
     `);
 };
 
-module.exports = { createComment };
+const getComment = (userId, spotId, skip, take) => {
+	return serviceDataSource.query(`
+        SELECT
+            spots.id AS spotId,
+            JSON_ARRAYAGG(
+                JSON_OBJECT(
+                    'commentId', comments.id,
+                    'comment', comment,
+                    'IS_AUTHOR', IF(comments.user_id = ${userId}, true, false)
+                )
+            ) AS commentBySpot
+        FROM spots
+        LEFT JOIN comments ON comments.spot_id = spots.id
+        WHERE spots.id = ${spotId}
+        GROUP BY spotId
+        LIMIT ${take} OFFSET ${skip}
+    `);
+};
+
+module.exports = { createComment, getComment };

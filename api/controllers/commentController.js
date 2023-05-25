@@ -15,4 +15,18 @@ const createComment = catchAsync(async (req, res) => {
 	res.status(201).json({ message: 'COMMENT_CREATED' });
 });
 
-module.exports = { createComment };
+const getComment = async (req, res) => {
+	const { spotId, skip, take } = req.query;
+
+	if (!spotId) {
+		const error = new Error('INVALID_REQUEST');
+		error.statusCode = 400;
+		throw error;
+	}
+
+	const data = await commentService.getComment(req.user, spotId, skip, take);
+
+	res.status(200).json({ data });
+};
+
+module.exports = { createComment, getComment };
