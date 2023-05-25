@@ -15,5 +15,6 @@ router.post(
 );
 router.get('/main', AuthMiddleware, spotController.getSpotForMain);
 router.get('/pop', AuthMiddleware, spotController.getSpotDetailForPopUp);
+router.delete('', AuthMiddleware, spotController.deleteSpot);
 
 module.exports = router;

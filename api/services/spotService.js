@@ -30,8 +30,32 @@ const getSpotForMain = (userId, longitude, latitude, distance) => {
 	return spotDao.getSpotForMain(userId, longitude, latitude, distance);
 };
 
-const getSpotDetailForPopUp = async (userId, spotId) => {
+const getSpotDetailForPopUp = (userId, spotId) => {
 	return spotDao.getSpotDetailForPopUp(userId, spotId);
 };
 
-module.exports = { getSpot, createSpot, getSpotForMain, getSpotDetailForPopUp };
+const deleteSpot = async (userId, spotId) => {
+	const [check] = await spotDao.checkSpotAuthor(spotId);
+	// 해당 작성글 없을 시, 에러
+	if (!check) {
+		const err = new Error('CANNOT_FIND_RESOURCE');
+		err.statusCode = 404;
+		throw err;
+	}
+	// 작성자 체크
+	if (check.user_id !== userId) {
+		const err = new Error('NOT_MATCH_AUTHOR');
+		err.statusCode = 402;
+		throw err;
+	}
+
+	return spotDao.deleteSpot(spotId);
+};
+
+module.exports = {
+	getSpot,
+	createSpot,
+	getSpotForMain,
+	getSpotDetailForPopUp,
+	deleteSpot,
+};

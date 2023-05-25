@@ -104,4 +104,28 @@ const getSpotDetailForPopUp = async (userId, spotId) => {
     `);
 };
 
-module.exports = { getSpot, createSpot, getSpotForMain, getSpotDetailForPopUp };
+const checkSpotAuthor = (spotId) => {
+	return serviceDataSource.query(`
+        SELECT
+            id,
+            user_id
+        FROM spots
+        WHERE id = ${spotId};
+    `);
+};
+
+const deleteSpot = (spotId) => {
+	return serviceDataSource.query(`
+        DELETE FROM spots
+        WHERE id = ${spotId}
+    `);
+};
+
+module.exports = {
+	getSpot,
+	createSpot,
+	getSpotForMain,
+	getSpotDetailForPopUp,
+	checkSpotAuthor,
+	deleteSpot,
+};

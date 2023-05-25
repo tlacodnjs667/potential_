@@ -26,7 +26,7 @@ const createSpot = catchAsync(async (req, res) => {
 	res.status(201).json({ message: 'SPOT_CREATED' });
 });
 
-const getSpotForMain = async (req, res) => {
+const getSpotForMain = catchAsync(async (req, res) => {
 	const { longitude, latitude, distance } = req.query;
 
 	const data = await spotService.getSpotForMain(
@@ -37,13 +37,26 @@ const getSpotForMain = async (req, res) => {
 	);
 
 	res.status(200).json({ data });
-};
+});
 
-const getSpotDetailForPopUp = async (req, res) => {
+const getSpotDetailForPopUp = catchAsync(async (req, res) => {
 	const { spotId } = req.query;
 
 	const data = await spotService.getSpotDetailForPopUp(req.user, spotId);
 	res.status(200).json({ data });
-};
+});
 
-module.exports = { getSpot, createSpot, getSpotForMain, getSpotDetailForPopUp };
+const deleteSpot = catchAsync(async (req, res) => {
+	const { spotId } = req.query;
+
+	await spotService.deleteSpot(req.user, spotId);
+	res.status(204);
+});
+
+module.exports = {
+	getSpot,
+	createSpot,
+	getSpotForMain,
+	getSpotDetailForPopUp,
+	deleteSpot,
+};
