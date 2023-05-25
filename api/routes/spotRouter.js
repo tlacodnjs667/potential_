@@ -10,7 +10,6 @@ router.post('', spotController.getSpot);
 
 router.post(
 	'/upload',
-	AuthMiddleware,
 	photoUploader.single('photo'),
 	spotController.createSpot
 );

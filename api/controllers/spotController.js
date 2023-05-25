@@ -9,8 +9,6 @@ const getSpot = catchAsync(async (req, res) => {
 });
 
 const createSpot = catchAsync(async (req, res) => {
-	console.log(req.body);
-
 	const { address, longitude, latitude, content, spot_keyword_id } = req.body;
 	const { location } = req.file;
 

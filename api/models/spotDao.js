@@ -26,7 +26,7 @@ const getSpot = async (longitude, latitude) => {
 };
 
 const createSpot = async (
-	user_id,
+	user_id = 1,
 	spot_keyword_id = 1,
 	address,
 	longitude,
