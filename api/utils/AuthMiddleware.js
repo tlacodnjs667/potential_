@@ -14,7 +14,7 @@ const AuthMiddleware = catchAsync(async (req, res, next) => {
 	const user = JWTUtil.__validate_JWT(access_token);
 
 	const [{ token }] = await userDao.getUserTokenFromDB(user.id);
-
+	console.log(token);
 	if (access_token !== token) {
 		const error = new Error('INVALID_TOKEN');
 		error.statusCode = 401;

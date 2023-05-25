@@ -33,8 +33,8 @@ const storeUserAccessToken = (id, access_token) => {
     `);
 };
 
-const getUserTokenFromDB = (userId) => {
-	return serviceDataSource.query(`
+const getUserTokenFromDB = async (userId) => {
+	return await serviceDataSource.query(`
         SELECT
             token
         FROM users

@@ -25,7 +25,8 @@ const signin = async (email, password) => {
 		error.statusCode = 400;
 		throw error;
 	}
-	if (!EncryptionUtil.__check_password(password, userInfoInDB.psword)) {
+
+	if (!EncryptionUtil.__check_password(password, userInfoInDB.password)) {
 		const error = new Error('BAD_PASSWORD');
 		error.statusCode = 400;
 		throw error;
