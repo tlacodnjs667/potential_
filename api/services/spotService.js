@@ -8,22 +8,20 @@ const createSpot = async (
 	user_id,
 	spot_keyword_id,
 	address,
-	spotLongitude,
-	spotLatitude,
+	longitude,
+	latitude,
 	content,
 	photo
 ) => {
-	await spotDao.createSpot(
+	return await spotDao.createSpot(
 		user_id,
 		spot_keyword_id,
 		address,
-		spotLongitude,
-		spotLatitude,
+		longitude,
+		latitude,
 		content,
 		photo
 	);
-
-	return;
 };
 
 const getSpotForMain = (userId, longitude, latitude, distance) => {
@@ -48,7 +46,7 @@ const deleteSpot = async (userId, spotId) => {
 		err.statusCode = 402;
 		throw err;
 	}
-
+	console.log('오긴 오지?');
 	return spotDao.deleteSpot(spotId);
 };
 

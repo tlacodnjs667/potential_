@@ -1,20 +1,20 @@
 const express = require('express');
-
-const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
+
+const app = express();
 
 const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
 
 const { serviceDataSource } = require('./api/models/appDataSource');
-const router = require('./api/routes/index');
-
 const { globalErrorHandler } = require('./api/utils/globalErrorHandler');
+const router = require('./api/routes/index');
 
 app.use(morgan('combined'));
 app.use(cors());
 app.use(express.json());
+
 app.use(router);
 app.use(globalErrorHandler);
 

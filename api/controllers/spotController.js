@@ -9,16 +9,17 @@ const getSpot = catchAsync(async (req, res) => {
 });
 
 const createSpot = catchAsync(async (req, res) => {
-	const { address, spotLongitude, spotLatitude, content, spot_keyword_id } =
-		req.body;
+	console.log(req.body);
+
+	const { address, longitude, latitude, content, spot_keyword_id } = req.body;
 	const { location } = req.file;
 
 	await spotService.createSpot(
 		req.user,
 		spot_keyword_id,
 		address,
-		spotLongitude,
-		spotLatitude,
+		longitude,
+		latitude,
 		content,
 		location
 	);
@@ -31,8 +32,8 @@ const getSpotForMain = catchAsync(async (req, res) => {
 
 	const data = await spotService.getSpotForMain(
 		req.user,
-		longitude,
-		latitude,
+		+longitude,
+		+latitude,
 		distance
 	);
 
@@ -42,14 +43,15 @@ const getSpotForMain = catchAsync(async (req, res) => {
 const getSpotDetailForPopUp = catchAsync(async (req, res) => {
 	const { spotId } = req.query;
 
-	const data = await spotService.getSpotDetailForPopUp(req.user, spotId);
+	const [data] = await spotService.getSpotDetailForPopUp(req.user, spotId);
 	res.status(200).json({ data });
 });
 
 const deleteSpot = catchAsync(async (req, res) => {
 	const { spotId } = req.query;
-
+	console.log('dd');
 	await spotService.deleteSpot(req.user, spotId);
+
 	res.status(204);
 });
 

@@ -9,10 +9,10 @@ const getSpot = async (longitude, latitude) => {
         SELECT  
             spots.id, 
             address,
-            ST_Distance_Sphere(@location, POINT(spotLongitude, spotLatitude)) AS distance,
+            ST_Distance_Sphere(@location, POINT(longitude, latitude)) AS distance,
             spot_keyword.keyword AS spot_keyword,
-            spotLongitude,
-            spotLatitude,
+            longitude,
+            latitude,
             content,
             photo,
             spots.created_at,
@@ -20,7 +20,7 @@ const getSpot = async (longitude, latitude) => {
         FROM spots 
         LEFT JOIN users ON spots.user_id = users.id
         LEFT JOIN spot_keyword ON spots.spot_keyword_id = spot_keyword.id
-        WHERE ST_Distance_Sphere(@location, POINT(spotLongitude, spotLatitude)) <= 100000000000
+        WHERE ST_Distance_Sphere(@location, POINT(longitude, latitude)) <= 100000000000
         ORDER BY distance;
     `);
 };
@@ -34,7 +34,7 @@ const createSpot = async (
 	content,
 	photo
 ) => {
-	serviceDataSource.query(`
+	return serviceDataSource.query(`
         INSERT INTO spots (
             user_id,
             spot_keyword_id,
@@ -64,16 +64,16 @@ const getSpotForMain = async (userId, longitude, latitude, distance) => {
         SELECT 
             spots.id AS spotId,
             address,
-            spots.spotLongitude,
-            spots.spotLatitude,
-            ST_Distance_Sphere(@location, POINT(spotLatitude, spotLongitude)) AS distance,
+            spots.longitude,
+            spots.latitude,
+            ST_Distance_Sphere(@location, POINT(longitude, latitude)) AS distance,
             spot_keyword.id AS keywordId,
             spot_keyword.img AS keywordImg,
             keyword,
             IF (user_id = ${userId}, true, false) AS IS_OWNER
         FROM spots
         LEFT JOIN spot_keyword ON spots.spot_keyword_id = spot_keyword.id
-        WHERE ST_Distance_Sphere(@location, POINT(spotLatitude, spotLongitude)) <= ${distance}
+        WHERE ST_Distance_Sphere(@location, POINT(longitude, latitude)) <= ${distance}
         ORDER BY distance;
     `);
 };
