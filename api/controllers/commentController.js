@@ -1,6 +1,5 @@
 const { catchAsync } = require('../utils/globalErrorHandler');
 const commentService = require('../services/commentService');
-const { json } = require('express');
 
 const createComment = catchAsync(async (req, res) => {
 	const { comment } = req.body;
@@ -13,6 +12,7 @@ const createComment = catchAsync(async (req, res) => {
 	}
 
 	await commentService.createComment(req.user, spotId, comment);
+
 	res.status(201).json({ message: 'COMMENT_CREATED' });
 });
 
@@ -45,7 +45,7 @@ const deleteComment = catchAsync(async (req, res) => {
 
 	await commentService.deleteComment(req.user, commentId);
 
-	res.status(204);
+	res.status(204).json();
 });
 
 module.exports = { createComment, getComment, modifyComment, deleteComment };

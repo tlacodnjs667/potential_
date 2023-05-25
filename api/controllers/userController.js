@@ -29,19 +29,19 @@ const signin = catchAsync(async (req, res) => {
 	res.status(200).json({ message: 'LOGIN_SUCCESS', access_token });
 });
 
-const logout = async (req, res) => {
+const logout = catchAsync(async (req, res) => {
 	const { user } = req;
 	const result = await userService.logout(user);
 
 	res.status(200).json({ message: 'LOGOUT_SUCCESS', result });
-};
+});
 
-const withdrawUser = async (req, res) => {
+const withdrawUser = catchAsync(async (req, res) => {
 	const { user } = req;
 
 	await userService.withdraw(user);
 
 	res.status(200).json({ message: 'USER_DELETED' });
-};
+});
 
 module.exports = { signup, signin, logout, withdrawUser };
