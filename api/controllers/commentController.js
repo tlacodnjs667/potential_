@@ -29,4 +29,13 @@ const getComment = async (req, res) => {
 	res.status(200).json({ data });
 };
 
-module.exports = { createComment, getComment };
+const modifyComment = async (req, res) => {
+	const { comment } = req.body;
+	const { commentId } = req.query;
+
+	await commentService.modifyComment(req.user, commentId, comment);
+
+	res.status(200).json({ message: 'COMMENT_MODIFIED' });
+};
+
+module.exports = { createComment, getComment, modifyComment };

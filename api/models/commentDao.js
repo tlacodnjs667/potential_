@@ -33,4 +33,26 @@ const getComment = (userId, spotId, skip, take) => {
     `);
 };
 
-module.exports = { createComment, getComment };
+const checkCommentAuthor = (commentId) => {
+	return serviceDataSource.query(`
+        SELECT
+            user_id
+        FROM comments
+        WHERE id = ${commentId};
+    `);
+};
+
+const modifyComment = (commentId, comment) => {
+	return serviceDataSource.query(`
+        UPDATE comments
+        SET comment = '${comment}'
+        WHERE id = ${commentId};
+    `);
+};
+
+module.exports = {
+	createComment,
+	getComment,
+	checkCommentAuthor,
+	modifyComment,
+};
