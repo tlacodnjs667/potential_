@@ -38,4 +38,12 @@ const modifyComment = async (req, res) => {
 	res.status(200).json({ message: 'COMMENT_MODIFIED' });
 };
 
-module.exports = { createComment, getComment, modifyComment };
+const deleteComment = async (req, res) => {
+	const { commentId } = req.query;
+
+	await commentService.deleteComment(req.user, commentId);
+
+	res.status(204);
+};
+
+module.exports = { createComment, getComment, modifyComment, deleteComment };

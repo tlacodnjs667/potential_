@@ -50,9 +50,17 @@ const modifyComment = (commentId, comment) => {
     `);
 };
 
+const deleteComment = (commentId) => {
+	return serviceDataSource.query(`
+        DELETE FROM comments
+        WHERE id = ${commentId}
+    `);
+};
+
 module.exports = {
 	createComment,
 	getComment,
 	checkCommentAuthor,
 	modifyComment,
+	deleteComment,
 };
