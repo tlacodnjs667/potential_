@@ -1,6 +1,5 @@
 const { JWTUtil } = require('./AuthUtil');
 const userDao = require('../models/userDao');
-const { catchAsync } = require('./globalErrorHandler');
 
 const AuthMiddleware = async (req, res, next) => {
 	const { access_token } = req.headers;
