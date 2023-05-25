@@ -1,5 +1,6 @@
 const { catchAsync } = require('../utils/globalErrorHandler');
 const commentService = require('../services/commentService');
+const { json } = require('express');
 
 const createComment = catchAsync(async (req, res) => {
 	const { comment } = req.body;
@@ -15,7 +16,7 @@ const createComment = catchAsync(async (req, res) => {
 	res.status(201).json({ message: 'COMMENT_CREATED' });
 });
 
-const getComment = async (req, res) => {
+const getComment = catchAsync(async (req, res) => {
 	const { spotId, skip, take } = req.query;
 
 	if (!spotId) {
@@ -24,26 +25,27 @@ const getComment = async (req, res) => {
 		throw error;
 	}
 
-	const data = await commentService.getComment(req.user, spotId, skip, take);
+	const [data] = await commentService.getComment(req.user, spotId, skip, take);
+	data.commentBySpot = JSON.parse(data.commentBySpot);
 
 	res.status(200).json({ data });
-};
+});
 
-const modifyComment = async (req, res) => {
+const modifyComment = catchAsync(async (req, res) => {
 	const { comment } = req.body;
 	const { commentId } = req.query;
 
 	await commentService.modifyComment(req.user, commentId, comment);
 
 	res.status(200).json({ message: 'COMMENT_MODIFIED' });
-};
+});
 
-const deleteComment = async (req, res) => {
+const deleteComment = catchAsync(async (req, res) => {
 	const { commentId } = req.query;
 
 	await commentService.deleteComment(req.user, commentId);
 
 	res.status(204);
-};
+});
 
 module.exports = { createComment, getComment, modifyComment, deleteComment };

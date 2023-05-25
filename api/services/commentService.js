@@ -11,8 +11,14 @@ const getComment = (userId, spotId, skip, take) => {
 const modifyComment = async (userId, commentId, comment) => {
 	const [checkAuthor] = await commentDao.checkCommentAuthor(commentId);
 
+	if (!checkAuthor) {
+		const error = new Error('CANNOT_FIND_COMMENT');
+		error.statusCode = 404;
+		throw error;
+	}
+
 	if (checkAuthor.user_id !== userId) {
-		const error = new Error(`UNMATCHED_USER`);
+		const error = new Error(`UNMATCHED_AUTHOR`);
 		error.statusCode = 401;
 		throw error;
 	}
@@ -23,8 +29,14 @@ const modifyComment = async (userId, commentId, comment) => {
 const deleteComment = async (userId, commentId) => {
 	const [checkAuthor] = await commentDao.checkCommentAuthor(commentId);
 
+	if (!checkAuthor) {
+		const error = new Error('CANNOT_FIND_COMMENT');
+		error.statusCode = 404;
+		throw error;
+	}
+
 	if (checkAuthor.user_id !== userId) {
-		const error = new Error('');
+		const error = new Error('UNMATCHED_AUTHOR');
 		error.statusCode = 401;
 		throw error;
 	}

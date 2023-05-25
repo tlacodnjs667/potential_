@@ -14,7 +14,7 @@ const createComment = (userId, spotId, comment) => {
     `);
 };
 
-const getComment = (userId, spotId, skip, take) => {
+const getComment = (userId, spotId, skip = 0, take = 10) => {
 	return serviceDataSource.query(`
         SELECT
             spots.id AS spotId,
