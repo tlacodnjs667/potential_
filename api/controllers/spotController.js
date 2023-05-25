@@ -26,4 +26,24 @@ const createSpot = catchAsync(async (req, res) => {
 	res.status(201).json({ message: 'SPOT_CREATED' });
 });
 
-module.exports = { getSpot, createSpot };
+const getSpotForMain = async (req, res) => {
+	const { longitude, latitude, distance } = req.query;
+
+	const data = await spotService.getSpotForMain(
+		req.user,
+		longitude,
+		latitude,
+		distance
+	);
+
+	res.status(200).json({ data });
+};
+
+const getSpotDetailForPopUp = async (req, res) => {
+	const { spotId } = req.query;
+
+	const data = await spotService.getSpotDetailForPopUp(req.user, spotId);
+	res.status(200).json({ data });
+};
+
+module.exports = { getSpot, createSpot, getSpotForMain, getSpotDetailForPopUp };

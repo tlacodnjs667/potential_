@@ -13,5 +13,7 @@ router.post(
 	photoUploader.single('photo'),
 	spotController.createSpot
 );
+router.get('/main', AuthMiddleware, spotController.getSpotForMain);
+router.get('/pop', AuthMiddleware, spotController.getSpotDetailForPopUp);
 
 module.exports = router;

@@ -26,4 +26,12 @@ const createSpot = async (
 	return;
 };
 
-module.exports = { getSpot, createSpot };
+const getSpotForMain = (userId, longitude, latitude, distance) => {
+	return spotDao.getSpotForMain(userId, longitude, latitude, distance);
+};
+
+const getSpotDetailForPopUp = async (userId, spotId) => {
+	return spotDao.getSpotDetailForPopUp(userId, spotId);
+};
+
+module.exports = { getSpot, createSpot, getSpotForMain, getSpotDetailForPopUp };
