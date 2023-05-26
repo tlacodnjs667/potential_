@@ -1,6 +1,6 @@
 const { serviceDataSource } = require('./appDataSource');
 
-const createComment = (userId, spotId, comment) => {
+const createComment = (userId = 1, spotId, comment) => {
 	return serviceDataSource.query(`
         INSERT INTO comments (
             user_id,
